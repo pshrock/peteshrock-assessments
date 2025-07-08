@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAUN™ Athlete Resilience Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .methodology-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .assessment-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .section-subtitle {
+            color: #718096;
+            font-size: 0.95em;
+        }
+        
+        .question-group {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #fff5f5;
+            border-radius: 12px;
+            border-left: 4px solid #ed8936;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-size: 1.05em;
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            color: #ed8936;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: #ed8936;
+            background: #fffaf0;
+        }
+        
+        .option.selected {
+            border-color: #ed8936;
+            background: #fed7d7;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #ed8936;
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 0.95em;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ed8936;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.25px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.3);
+        }
+        
+        .results-section {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .results-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .score-display {
+            font-size: 4em;
+            font-weight: 800;
+            color: #ed8936;
+            margin: 20px 0;
+        }
+        
+        .dimension-scores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+        
+        .dimension-card {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .dimension-card h4 {
+            color: #dd6b20;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        
+        .dimension-card .score {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .interpretation {
+            background: #fff5f5;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .interpretation h3 {
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .recommendations {
+            background: #fffaf0;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .recommendations h3 {
+            color: #dd6b20;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .brand-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dimension-scores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="methodology-badge">RAUN™ Framework</div>
+            <h1>Athlete Resilience Assessment</h1>
+            <p>Comprehensive evaluation of psychological durability and adaptive capacity for athletic performance under pressure.</p>
+        </div>
+
+        <div id="assessment-form" class="assessment-container">
+            <div class="section-header">
+                <h2 class="section-title">Athletic Resilience Evaluation</h2>
+                <p class="section-subtitle">Assess your resilience across the four core RAUN™ dimensions</p>
+            </div>
+
+            <form id="raunAssessment">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sport">Primary Sport</label>
+                        <input type="text" id="sport" name="sport" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="level">Competition Level</label>
+                        <select id="level" name="level" required>
+                            <option value="">Select Level</option>
+                            <option value="youth">Youth/Junior</option>
+                            <option value="high-school">High School</option>
+                            <option value="college">College</option>
+                            <option value="professional">Professional</option>
+                            <option value="elite">Elite/Olympic</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">1.</span>
+                        When you experience a significant setback in competition, how do you typically respond?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="r1_1" name="resilience_1" value="1" required>
+                            <label for="r1_1">I struggle significantly and often doubt my abilities for weeks or months</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_2" name="resilience_1" value="2">
+                            <label for="r1_2">It affects me deeply but I eventually work through it with support</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_3" name="resilience_1" value="3">
+                            <label for="r1_3">I'm disappointed but can refocus and move forward within days</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_4" name="resilience_1" value="4">
+                            <label for="r1_4">I quickly analyze what happened and use it as motivation to improve</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_5" name="resilience_1" value="5">
+                            <label for="r1_5">I thrive on challenges and setbacks make me more determined and focused</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">2.</span>
+                        How well do you adjust your performance when facing unexpected changes during competition?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="a1_1" name="adaptability_1" value="1" required>
+                            <label for="a1_1">Unexpected changes significantly disrupt my performance and focus</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="a1_2" name="adaptability_1" value="2">
+                            <label for="a1_2">I struggle initially but can adapt with time and coaching guidance</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="a1_3" name="adaptability_1" value="3">
+                            <label for="a1_3">I can adjust my approach reasonably well within the competition</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="a1_4" name="adaptability_1" value="4">
+                            <label for="a1_4">I quickly recognize changes and smoothly adjust my strategy</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="a1_5" name="adaptability_1" value="5">
+                            <label for="a1_5">I excel at reading situations and making real-time adjustments that give me advantages</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">3.</span>
+                        During high-pressure moments in important competitions, how do you maintain your mental composure?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="u1_1" name="unbreakable_1" value="1" required>
+                            <label for="u1_1">I often feel overwhelmed and my performance suffers under pressure</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="u1_2" name="unbreakable_1" value="2">
+                            <label for="u1_2">Pressure affects me but I can sometimes push through with effort</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="u1_3" name="unbreakable_1" value="3">
+                            <label for="u1_3">I generally maintain my composure with some fluctuation in focus</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="u1_4" name="unbreakable_1" value="4">
+                            <label for="u1_4">I stay composed and focused even in high-stakes situations</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="u1_5" name="unbreakable_1" value="5">
+                            <label for="u1_5">I thrive under pressure and often perform my best when stakes are highest</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">4.</span>
+                        How effectively do you navigate complex team dynamics and interpersonal challenges?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="n1_1" name="navigate_1" value="1" required>
+                            <label for="n1_1">Team conflicts and interpersonal issues significantly affect my performance</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="n1_2" name="navigate_1" value="2">
+                            <label for="n1_2">I struggle with team dynamics but try to stay focused on my role</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="n1_3" name="navigate_1" value="3">
+                            <label for="n1_3">I manage team relationships adequately and maintain my focus</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="n1_4" name="navigate_1" value="4">
+                            <label for="n1_4">I effectively handle team dynamics and often help resolve conflicts</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="n1_5" name="navigate_1" value="5">
+                            <label for="n1_5">I excel at reading team dynamics and use interpersonal skills to enhance team performance</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">Generate Resilience Profile</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="results-section" class="results-section">
+            <h2 class="results-title">Your RAUN™ Resilience Profile</h2>
+            <div class="score-display" id="total-score">--</div>
+            <p><strong>Overall Resilience Index</strong></p>
+            
+            <div class="dimension-scores" id="dimension-scores"></div>
+            <div class="interpretation" id="interpretation"></div>
+            <div class="recommendations" id="recommendations"></div>
+        </div>
+
+        <div class="brand-footer">
+            <p><strong>RAUN™ Resilience Assessment</strong> | Elite Athletic Performance Framework<br>
+            © 2025 Pete Shrock LLC | All methodologies are proprietary and protected</p>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    this.parentElement.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        document.getElementById('raunAssessment').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const responses = {};
+            
+            for (let [key, value] of formData.entries()) {
+                responses[key] = value;
+            }
+            
+            const scores = calculateScores(responses);
+            displayResults(scores, responses);
+        });
+
+        function calculateScores(responses) {
+            const resilienceScore = parseInt(responses.resilience_1 || 0);
+            const adaptabilityScore = parseInt(responses.adaptability_1 || 0);
+            const unbreakableScore = parseInt(responses.unbreakable_1 || 0);
+            const navigateScore = parseInt(responses.navigate_1 || 0);
+            
+            const totalScore = resilienceScore + adaptabilityScore + unbreakableScore + navigateScore;
+            const percentageScore = Math.round((totalScore / 20) * 100);
+            
+            return {
+                resilience_score: resilienceScore,
+                adaptability_score: adaptabilityScore,
+                unbreakable_score: unbreakableScore,
+                navigate_score: navigateScore,
+                total_score: totalScore,
+                percentage_score: percentageScore
+            };
+        }
+
+        function displayResults(scores, responses) {
+            const assessmentForm = document.getElementById('assessment-form');
+            const resultsSection = document.getElementById('results-section');
+            const totalScoreElement = document.getElementById('total-score');
+            const dimensionScoresElement = document.getElementById('dimension-scores');
+            const interpretationElement = document.getElementById('interpretation');
+            const recommendationsElement = document.getElementById('recommendations');
+            
+            assessmentForm.style.display = 'none';
+            resultsSection.style.display = 'block';
+            
+            totalScoreElement.textContent = scores.percentage_score + '%';
+            
+            dimensionScoresElement.innerHTML = `
+                <div class="dimension-card">
+                    <h4>Resilience</h4>
+                    <div class="score">${scores.resilience_score}/5</div>
+                </div>
+                <div class="dimension-card">
+                    <h4>Adaptability</h4>
+                    <div class="score">${scores.adaptability_score}/5</div>
+                </div>
+                <div class="dimension-card">
+                    <h4>Unbreakable</h4>
+                    <div class="score">${scores.unbreakable_score}/5</div>
+                </div>
+                <div class="dimension-card">
+                    <h4>Navigate</h4>
+                    <div class="score">${scores.navigate_score}/5</div>
+                </div>
+            `;
+            
+            let interpretation = '';
+            let recommendations = '';
+            
+            if (scores.percentage_score >= 85) {
+                interpretation = `
+                    <h3>Elite Resilience Level</h3>
+                    <p>Your RAUN™ assessment indicates exceptional resilience across all dimensions. You demonstrate elite-level psychological durability, rapid adaptability, unbreakable mental composure, and superior navigation of complex athletic environments.</p>
+                    <p><strong>Key Strengths:</strong> Mental toughness, pressure performance, adaptive thinking, team leadership</p>
+                `;
+                recommendations = `
+                    <h3>Elite Performance Optimization</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Focus on helping teammates develop resilience through mentorship</li>
+                        <li>Explore advanced mental training techniques for peak performance</li>
+                        <li>Consider leadership roles within your team structure</li>
+                        <li>Develop contingency mental strategies for unprecedented challenges</li>
+                    </ul>
+                `;
+            } else if (scores.percentage_score >= 70) {
+                interpretation = `
+                    <h3>High Resilience Level</h3>
+                    <p>You demonstrate strong resilience capabilities with consistent performance across most RAUN™ dimensions. You have the foundation for elite performance with specific areas for targeted development.</p>
+                    <p><strong>Key Strengths:</strong> Generally strong across multiple resilience dimensions</p>
+                `;
+                recommendations = `
+                    <h3>Targeted Development Plan</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Focus on strengthening your lowest-scoring RAUN™ dimension</li>
+                        <li>Practice pressure situations through controlled exposure</li>
+                        <li>Develop specific mental routines for competition</li>
+                        <li>Work with sports psychology professionals for optimization</li>
+                    </ul>
+                `;
+            } else {
+                interpretation = `
+                    <h3>Developing Resilience Level</h3>
+                    <p>Your assessment shows opportunities for resilience development across the RAUN™ framework. Systematic training in these areas will yield significant performance improvements.</p>
+                    <p><strong>Focus Areas:</strong> Building mental toughness and systematic approaches to pressure situations</p>
+                `;
+                recommendations = `
+                    <h3>Resilience Building Program</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Establish daily mental training and reflection practices</li>
+                        <li>Work on stress inoculation through graduated exposure</li>
+                        <li>Develop specific coping strategies for setbacks</li>
+                        <li>Focus on building confidence through systematic skill development</li>
+                    </ul>
+                `;
+            }
+            
+            interpretationElement.innerHTML = interpretation;
+            recommendationsElement.innerHTML = recommendations;
+            
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

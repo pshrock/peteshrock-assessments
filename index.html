@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pete Shrock LLC | Elite Performance Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: #ffffff;
+        }
+        
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+        
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            background: #2d3748;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-right: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand-text h1 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 2px;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand-text p {
+            color: #718096;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero-section {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+        
+        .hero-title {
+            font-size: 3.5em;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25em;
+            color: #4a5568;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            padding: 80px 0;
+        }
+        
+        .methodology-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .methodology-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: #cbd5e0;
+        }
+        
+        .methodology-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4299e1, #3182ce);
+        }
+        
+        .form-card::before { background: linear-gradient(90deg, #4299e1, #3182ce); }
+        .raun-card::before { background: linear-gradient(90deg, #ed8936, #dd6b20); }
+        .core-card::before { background: linear-gradient(90deg, #48bb78, #38a169); }
+        
+        .methodology-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .form-card .methodology-icon { background: linear-gradient(135deg, #4299e1, #3182ce); }
+        .raun-card .methodology-icon { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+        .core-card .methodology-icon { background: linear-gradient(135deg, #48bb78, #38a169); }
+        
+        .methodology-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a202c;
+            letter-spacing: -0.5px;
+        }
+        
+        .methodology-subtitle {
+            font-size: 0.95em;
+            color: #718096;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .methodology-description {
+            color: #4a5568;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        
+        .target-audience {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        
+        .target-audience h4 {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .target-audience ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .target-audience li {
+            padding: 4px 0;
+            color: #4a5568;
+            font-size: 0.9em;
+            position: relative;
+            padding-left: 16px;
+        }
+        
+        .target-audience li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3182ce;
+            font-weight: bold;
+        }
+        
+        .methodology-btn {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            font-size: 0.95em;
+            letter-spacing: 0.25px;
+        }
+        
+        .methodology-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(66, 153, 225, 0.3);
+        }
+        
+        .form-card .methodology-btn { 
+            background: linear-gradient(135deg, #4299e1, #3182ce); 
+        }
+        .raun-card .methodology-btn { 
+            background: linear-gradient(135deg, #ed8936, #dd6b20); 
+        }
+        .core-card .methodology-btn { 
+            background: linear-gradient(135deg, #48bb78, #38a169); 
+        }
+        
+        .about-section {
+            background: #f7fafc;
+            padding: 80px 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-image {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0 auto;
+            letter-spacing: -1px;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+        
+        .about-text p {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .credentials {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+        
+        .credential-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .credential-item h4 {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .credential-item p {
+            color: #718096;
+            font-size: 0.9em;
+            margin: 0;
+        }
+        
+        .research-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1em;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        
+        .research-card {
+            background: #f7fafc;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .research-card h3 {
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 1.2em;
+        }
+        
+        .research-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .research-card li {
+            padding: 8px 0;
+            color: #4a5568;
+            font-size: 0.95em;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .research-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3182ce;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 60px 0 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand h3 {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .footer-brand p {
+            color: #a0aec0;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+            font-size: 0.95em;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #4a5568;
+            padding-top: 32px;
+            text-align: center;
+            color: #a0aec0;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .methodology-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 40px 0;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .hero-title {
+                font-size: 2.5em;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="company-logo">PS</div>
+                <div class="brand-text">
+                    <h1>Pete Shrock LLC</h1>
+                    <p>Elite Performance Solutions</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#methodologies" class="nav-link">Methodologies</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#research" class="nav-link">Research</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Human Performance<br>& Resilience Design</h1>
+            <p class="hero-subtitle">Evidence-based frameworks for developing elite performance through systematic resilience, strategic decision-making, and sustainable excellence across professional and athletic domains.</p>
+        </div>
+    </section>
+
+    <section id="methodologies" class="container">
+        <div class="methodology-grid">
+            <div class="methodology-card form-card">
+                <div class="methodology-icon">F</div>
+                <h2 class="methodology-title">FORM™</h2>
+                <p class="methodology-subtitle">Function | Optimization | Resilience | Momentum</p>
+                <p class="methodology-description">Strategic performance optimization framework designed for elite professionals operating under high-stakes conditions.</p>
+                
+                <div class="target-audience">
+                    <h4>Primary Applications</h4>
+                    <ul>
+                        <li>Professional Athletes</li>
+                        <li>C-Suite Executives</li>
+                        <li>High-Performance Teams</li>
+                        <li>Military & Tactical Professionals</li>
+                    </ul>
+                </div>
+                
+                <button class="methodology-btn" onclick="window.open('merkel-model-presentation.html', '_blank')">Access FORM™ Assessment</button>
+            </div>
+
+            <div class="methodology-card raun-card">
+                <div class="methodology-icon">R</div>
+                <h2 class="methodology-title">RAUN™</h2>
+                <p class="methodology-subtitle">Resilience | Adaptability | Unbreakable | Navigate</p>
+                <p class="methodology-description">Comprehensive resilience assessment framework measuring psychological durability and adaptive capacity under pressure.</p>
+                
+                <div class="target-audience">
+                    <h4>Primary Applications</h4>
+                    <ul>
+                        <li>Athletic Performance</li>
+                        <li>Leadership Development</li>
+                        <li>Team Dynamics</li>
+                        <li>Organizational Resilience</li>
+                    </ul>
+                </div>
+                
+                <button class="methodology-btn" onclick="window.open('raun-athlete-assessment.html', '_blank')">Access RAUN™ Assessment</button>
+            </div>
+
+            <div class="methodology-card core-card">
+                <div class="methodology-icon">C</div>
+                <h2 class="methodology-title">COREsuccess™</h2>
+                <p class="methodology-subtitle">Character | Ownership | Resilience | Excellence</p>
+                <p class="methodology-description">Character-based development system focused on building sustainable success patterns across developmental stages.</p>
+                
+                <div class="target-audience">
+                    <h4>Primary Applications</h4>
+                    <ul>
+                        <li>Youth Development (10-17)</li>
+                        <li>Young Professionals (18+)</li>
+                        <li>Family Systems</li>
+                        <li>Educational Institutions</li>
+                    </ul>
+                </div>
+                
+                <button class="methodology-btn" onclick="window.open('core-assessment.html', '_blank')">Access COREsuccess™ Assessment</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">PS</div>
+                <div class="about-text">
+                    <h2>Pete Shrock</h2>
+                    <p><strong>World-renowned specialist in human performance optimization and resilience design.</strong> With over two decades of experience developing systematic frameworks for elite performance, Pete has established himself as a leading authority in the integration of psychological science and practical application.</p>
+                    
+                    <p>His work spans from championship-level athletic programs to Fortune 500 executive development, consistently delivering measurable improvements in performance under pressure. All methodologies are grounded in evidence-based research and refined through real-world application with elite performers.</p>
+                    
+                    <div class="credentials">
+                        <div class="credential-item">
+                            <h4>Performance Psychology</h4>
+                            <p>Advanced study in resilience science and human optimization</p>
+                        </div>
+                        <div class="credential-item">
+                            <h4>Military Training Principles</h4>
+                            <p>Integration of elite military selection and development protocols</p>
+                        </div>
+                        <div class="credential-item">
+                            <h4>Organizational Development</h4>
+                            <p>Systematic design for sustainable performance improvement</p>
+                        </div>
+                        <div class="credential-item">
+                            <h4>Athletic Performance</h4>
+                            <p>Championship-level coaching and mental performance training</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="research-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Research Foundation</h2>
+                <p class="section-subtitle">All methodologies are built upon rigorous scientific research and validated through practical application with elite performers across multiple domains.</p>
+            </div>
+            
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>Performance Psychology Research</h3>
+                    <ul>
+                        <li>Duckworth: Grit and Psychological Resilience</li>
+                        <li>Dweck: Growth Mindset and Adaptive Thinking</li>
+                        <li>Csikszentmihalyi: Flow State and Optimal Performance</li>
+                        <li>Seligman: Positive Psychology and Human Flourishing</li>
+                    </ul>
+                </div>
+                
+                <div class="research-card">
+                    <h3>Military and Tactical Training</h3>
+                    <ul>
+                        <li>Navy SEAL Selection and Assessment Protocols</li>
+                        <li>Army Ranger Mental Toughness Development</li>
+                        <li>Special Operations Leadership Principles</li>
+                        <li>Stress Inoculation and Pressure Training</li>
+                    </ul>
+                </div>
+                
+                <div class="research-card">
+                    <h3>Organizational Science</h3>
+                    <ul>
+                        <li>Collins: Systems Thinking and Sustainable Excellence</li>
+                        <li>Kegan: Adult Development and Adaptive Capacity</li>
+                        <li>Edmondson: Psychological Safety and Team Performance</li>
+                        <li>Brown: Vulnerability and Authentic Leadership</li>
+                    </ul>
+                </div>
+                
+                <div class="research-card">
+                    <h3>Athletic Performance</h3>
+                    <ul>
+                        <li>Championship Program Analysis and Success Factors</li>
+                        <li>Mental Training and Competitive Psychology</li>
+                        <li>Team Dynamics and Leadership Emergence</li>
+                        <li>Pressure Performance and Clutch Execution</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Pete Shrock LLC</h3>
+                    <p>Building systematic excellence through evidence-based performance optimization and resilience development.</p>
+                    <p>All frameworks, assessments, and methodologies are proprietary intellectual property protected under applicable copyright and trademark law.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Methodologies</h4>
+                    <ul>
+                        <li><a href="#" onclick="window.open('merkel-model-presentation.html', '_blank')">FORM™ Framework</a></li>
+                        <li><a href="#" onclick="window.open('raun-athlete-assessment.html', '_blank')">RAUN™ Assessment</a></li>
+                        <li><a href="#" onclick="window.open('core-assessment.html', '_blank')">COREsuccess™ System</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Professional Services</h4>
+                    <ul>
+                        <li><a href="#contact">Executive Coaching</a></li>
+                        <li><a href="#contact">Athletic Performance</a></li>
+                        <li><a href="#contact">Organizational Development</a></li>
+                        <li><a href="#contact">Speaking & Consulting</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Pete Shrock LLC. All rights reserved. RAUN™, FORM™, and COREsuccess™ are registered trademarks.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
