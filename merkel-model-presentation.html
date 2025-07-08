@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merkel Model | FORM™ Performance Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .methodology-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .assessment-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .section-subtitle {
+            color: #718096;
+            font-size: 0.95em;
+        }
+        
+        .question-group {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #4299e1;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-size: 1.05em;
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            color: #4299e1;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: #4299e1;
+            background: #f0f8ff;
+        }
+        
+        .option.selected {
+            border-color: #4299e1;
+            background: #e6f3ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #4299e1;
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 0.95em;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.25px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.3);
+        }
+        
+        .results-section {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .results-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .score-display {
+            font-size: 4em;
+            font-weight: 800;
+            color: #4299e1;
+            margin: 20px 0;
+        }
+        
+        .interpretation {
+            background: #f7fafc;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .interpretation h3 {
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .recommendations {
+            background: #e6f3ff;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .recommendations h3 {
+            color: #3182ce;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .brand-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="methodology-badge">FORM™ Framework</div>
+            <h1>Merkel Model Performance Assessment</h1>
+            <p>Strategic performance optimization for elite professionals and athletes. This assessment evaluates key performance indicators within the FORM™ methodology framework.</p>
+        </div>
+
+        <div id="assessment-form" class="assessment-container">
+            <div class="section-header">
+                <h2 class="section-title">Performance Evaluation</h2>
+                <p class="section-subtitle">Please provide accurate responses to generate your personalized performance profile</p>
+            </div>
+
+            <form id="merkelAssessment">
+                <!-- Personal Information -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Current Role/Position</label>
+                        <input type="text" id="role" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Years of Experience</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">Select Range</option>
+                            <option value="0-2">0-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="6-10">6-10 years</option>
+                            <option value="11-15">11-15 years</option>
+                            <option value="16+">16+ years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- F - Function Assessment -->
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">1.</span>
+                        When facing high-pressure situations, how consistently do you maintain optimal performance levels?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="f1_1" name="function_1" value="1" required>
+                            <label for="f1_1">I often struggle to maintain my usual performance under pressure</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="f1_2" name="function_1" value="2">
+                            <label for="f1_2">My performance occasionally dips during high-pressure moments</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="f1_3" name="function_1" value="3">
+                            <label for="f1_3">I generally maintain steady performance with minor fluctuations</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="f1_4" name="function_1" value="4">
+                            <label for="f1_4">I consistently perform well under pressure with rare lapses</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="f1_5" name="function_1" value="5">
+                            <label for="f1_5">I thrive under pressure and often perform at my peak during critical moments</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- O - Optimization Assessment -->
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">2.</span>
+                        How effectively do you identify and implement performance improvements in your work/training?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="o1_1" name="optimization_1" value="1" required>
+                            <label for="o1_1">I rarely analyze my performance or make systematic improvements</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="o1_2" name="optimization_1" value="2">
+                            <label for="o1_2">I occasionally review my performance but struggle with consistent improvement</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="o1_3" name="optimization_1" value="3">
+                            <label for="o1_3">I regularly assess my performance and make moderate improvements</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="o1_4" name="optimization_1" value="4">
+                            <label for="o1_4">I systematically analyze and continuously optimize my performance</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="o1_5" name="optimization_1" value="5">
+                            <label for="o1_5">I excel at identifying micro-adjustments and implementing strategic improvements</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- R - Resilience Assessment -->
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">3.</span>
+                        When experiencing setbacks or failures, how quickly do you recover and return to peak performance?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="r1_1" name="resilience_1" value="1" required>
+                            <label for="r1_1">Setbacks significantly impact me and recovery takes considerable time</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_2" name="resilience_1" value="2">
+                            <label for="r1_2">I recover from setbacks but it typically takes several days or weeks</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_3" name="resilience_1" value="3">
+                            <label for="r1_3">I bounce back from setbacks within a reasonable timeframe</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_4" name="resilience_1" value="4">
+                            <label for="r1_4">I recover quickly from setbacks and often learn valuable lessons</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="r1_5" name="resilience_1" value="5">
+                            <label for="r1_5">I use setbacks as fuel for improvement and bounce back stronger than before</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- M - Momentum Assessment -->
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">4.</span>
+                        How effectively do you build and maintain positive momentum in your performance cycles?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="m1_1" name="momentum_1" value="1" required>
+                            <label for="m1_1">I struggle to build consistent momentum and often feel stuck in plateaus</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="m1_2" name="momentum_1" value="2">
+                            <label for="m1_2">I build momentum occasionally but have difficulty sustaining it</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="m1_3" name="momentum_1" value="3">
+                            <label for="m1_3">I can build and maintain momentum for moderate periods</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="m1_4" name="momentum_1" value="4">
+                            <label for="m1_4">I consistently build momentum and sustain it through most challenges</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="m1_5" name="momentum_1" value="5">
+                            <label for="m1_5">I excel at creating powerful momentum that carries me through extended performance cycles</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Decision Making -->
+                <div class="question-group">
+                    <div class="question">
+                        <span class="question-number">5.</span>
+                        How do you approach strategic decision-making during high-stakes situations?
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="s1_1" name="strategy_1" value="1" required>
+                            <label for="s1_1">I tend to make reactive decisions based on immediate circumstances</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="s1_2" name="strategy_1" value="2">
+                            <label for="s1_2">I consider some strategic factors but often rely on instinct</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="s1_3" name="strategy_1" value="3">
+                            <label for="s1_3">I balance strategic thinking with situational adaptation</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="s1_4" name="strategy_1" value="4">
+                            <label for="s1_4">I systematically evaluate options and make well-informed strategic decisions</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="s1_5" name="strategy_1" value="5">
+                            <label for="s1_5">I excel at rapid strategic analysis and make optimal decisions under pressure</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">Generate Performance Profile</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="results-section" class="results-section">
+            <h2 class="results-title">Your FORM™ Performance Profile</h2>
+            <div class="score-display" id="total-score">--</div>
+            <p><strong>Overall Performance Index</strong></p>
+            
+            <div class="interpretation" id="interpretation">
+                <!-- Results will be populated here -->
+            </div>
+            
+            <div class="recommendations" id="recommendations">
+                <!-- Recommendations will be populated here -->
+            </div>
+        </div>
+
+        <div class="brand-footer">
+            <p><strong>Merkel Model</strong> | Integrated within the FORM™ Performance Framework<br>
+            © 2025 Pete Shrock LLC | All methodologies are proprietary and protected</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize variables
+        let db = null;
+        let firebaseAvailable = false;
+
+        // Try to load Firebase
+        const script1 = document.createElement('script');
+        script1.src = 'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
+        script1.onload = function() {
+            const script2 = document.createElement('script');
+            script2.src = 'https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js';
+            script2.onload = function() {
+                try {
+                    // Firebase Configuration
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyCuBf2mbWm2lr_DAX0HVSEJeBXC9Vsv-F0",
+                        authDomain: "peteshrock-assessments.firebaseapp.com",
+                        databaseURL: "https://peteshrock-assessments-default-rtdb.firebaseio.com/",
+                        projectId: "peteshrock-assessments",
+                        storageBucket: "peteshrock-assessments.firebasestorage.app",
+                        messagingSenderId: "352274165104",
+                        appId: "1:352274165104:web:629011309sd6654e4b33b5",
+                        measurementId: "G-7Y4W0L361B"
+                    };
+
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore();
+                    firebaseAvailable = true;
+                    console.log('Firebase loaded successfully');
+                } catch (error) {
+                    console.log('Firebase not available:', error);
+                }
+            };
+            document.head.appendChild(script2);
+        };
+        document.head.appendChild(script1);
+
+        // Add click handlers for option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    this.parentElement.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to this option
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        // Form submission handler
+        document.getElementById('merkelAssessment').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const responses = {};
+            
+            // Collect all form data
+            for (let [key, value] of formData.entries()) {
+                responses[key] = value;
+            }
+            
+            // Calculate scores
+            const scores = calculateScores(responses);
+            
+            // Save to Firebase if available
+            if (firebaseAvailable && db) {
+                try {
+                    await db.collection('merkel-assessments').add({
+                        ...responses,
+                        ...scores,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        assessment_type: 'merkel-model-form'
+                    });
+                    console.log('Assessment saved successfully');
+                } catch (error) {
+                    console.log('Error saving assessment:', error);
+                }
+            } else {
+                console.log('Assessment completed (Firebase not available)');
+            }
+            
+            // Display results
+            displayResults(scores, responses);
+        });
+
+        function calculateScores(responses) {
+            const functionScore = parseInt(responses.function_1 || 0);
+            const optimizationScore = parseInt(responses.optimization_1 || 0);
+            const resilienceScore = parseInt(responses.resilience_1 || 0);
+            const momentumScore = parseInt(responses.momentum_1 || 0);
+            const strategyScore = parseInt(responses.strategy_1 || 0);
+            
+            const totalScore = functionScore + optimizationScore + resilienceScore + momentumScore + strategyScore;
+            const percentageScore = Math.round((totalScore / 25) * 100);
+            
+            return {
+                function_score: functionScore,
+                optimization_score: optimizationScore,
+                resilience_score: resilienceScore,
+                momentum_score: momentumScore,
+                strategy_score: strategyScore,
+                total_score: totalScore,
+                percentage_score: percentageScore
+            };
+        }
+
+        function displayResults(scores, responses) {
+            const assessmentForm = document.getElementById('assessment-form');
+            const resultsSection = document.getElementById('results-section');
+            const totalScoreElement = document.getElementById('total-score');
+            const interpretationElement = document.getElementById('interpretation');
+            const recommendationsElement = document.getElementById('recommendations');
+            
+            // Hide form and show results
+            assessmentForm.style.display = 'none';
+            resultsSection.style.display = 'block';
+            
+            // Display score
+            totalScoreElement.textContent = scores.percentage_score + '%';
+            
+            // Generate interpretation
+            let interpretation = '';
+            let recommendations = '';
+            
+            if (scores.percentage_score >= 90) {
+                interpretation = `
+                    <h3>Elite Performance Level</h3>
+                    <p>Your assessment indicates exceptional performance across all FORM™ dimensions. You demonstrate elite-level functioning under pressure, systematic optimization, rapid resilience recovery, strong momentum building, and strategic decision-making capabilities.</p>
+                    <p><strong>Key Strengths:</strong> Pressure performance, systematic improvement, rapid recovery, momentum building, strategic thinking</p>
+                `;
+                recommendations = `
+                    <h3>Optimization Recommendations</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Focus on micro-optimizations and advanced performance techniques</li>
+                        <li>Consider mentoring others to reinforce your own systematic approach</li>
+                        <li>Explore cutting-edge performance science applications</li>
+                        <li>Develop contingency strategies for unprecedented challenges</li>
+                    </ul>
+                `;
+            } else if (scores.percentage_score >= 75) {
+                interpretation = `
+                    <h3>High Performance Level</h3>
+                    <p>You demonstrate strong performance capabilities with consistent results across most FORM™ dimensions. There are specific areas where targeted development could elevate you to elite performance levels.</p>
+                    <p><strong>Key Strengths:</strong> Generally strong across multiple dimensions with room for specific optimization</p>
+                `;
+                recommendations = `
+                    <h3>Development Recommendations</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Identify and focus on your lowest-scoring FORM™ dimension</li>
+                        <li>Implement systematic tracking of performance metrics</li>
+                        <li>Develop specific protocols for pressure situations</li>
+                        <li>Create structured recovery and momentum-building routines</li>
+                    </ul>
+                `;
+            } else if (scores.percentage_score >= 60) {
+                interpretation = `
+                    <h3>Developing Performance Level</h3>
+                    <p>Your assessment shows solid foundational performance with significant opportunities for improvement across the FORM™ framework. Systematic development in key areas will yield substantial performance gains.</p>
+                    <p><strong>Focus Areas:</strong> Building consistency and developing systematic approaches to performance optimization</p>
+                `;
+                recommendations = `
+                    <h3>Development Priorities</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Establish daily performance tracking and reflection protocols</li>
+                        <li>Develop pressure training and stress inoculation practices</li>
+                        <li>Create systematic approaches to skill development</li>
+                        <li>Build resilience through controlled challenge exposure</li>
+                    </ul>
+                `;
+            } else {
+                interpretation = `
+                    <h3>Foundation Building Level</h3>
+                    <p>Your assessment indicates the need for fundamental development across the FORM™ framework. This represents an excellent opportunity to build systematic performance capabilities from the ground up.</p>
+                    <p><strong>Priority:</strong> Establishing core performance systems and building foundational resilience</p>
+                `;
+                recommendations = `
+                    <h3>Foundation Building Plan</h3>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li>Begin with basic performance tracking and self-awareness development</li>
+                        <li>Focus on building stress tolerance through gradual exposure</li>
+                        <li>Establish consistent training/work routines</li>
+                        <li>Develop fundamental resilience and recovery practices</li>
+                    </ul>
+                `;
+            }
+            
+            interpretationElement.innerHTML = interpretation;
+            recommendationsElement.innerHTML = recommendations;
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        console.log('Merkel Model - FORM™ Assessment Loaded Successfully! 🚀');
+    </script>
+</body>
+</html>
